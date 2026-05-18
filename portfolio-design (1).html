@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guilherme Dobrychtop — Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,900;1,9..144,300;1,9..144,900&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FFFDE7;
+  --ink: #2b2318;
+  --muted: rgba(43,35,24,0.42);
+  --line: rgba(43,35,24,0.13);
+  --red: #8b5e3c;
+  --cream: #e6dfd2;
+  --moss: #8b5e3c;
+  --brown: #8b5e3c;
+  --sand: #c9a97a;
+  --dark-moss: #3a2618;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif: 'Fraunces', serif;
+  --font-body: 'Hanken Grotesk', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cur { width:10px; height:10px; background:var(--ink); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9999; transition:width 0.2s,height 0.2s; mix-blend-mode:difference; }
+.cur-ring { width:36px; height:36px; border:1px solid var(--ink); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; transition:transform 0.35s ease; mix-blend-mode:difference; }
+body.hover .cur { width:40px; height:40px; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.4rem 2.5rem;
+  mix-blend-mode: multiply;
+}
+.nav-logo { font-family:var(--font-display); font-size:1.5rem; letter-spacing:0.05em; color:var(--ink); text-decoration:none; }
+.nav-logo em { font-family:var(--font-serif); font-style:italic; font-weight:300; font-size:1.1rem; color:var(--brown); }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover { color:var(--ink); }
+.nav-cta { font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; background:var(--ink); color:var(--bg); padding:0.55rem 1.4rem; text-decoration:none; transition:background 0.2s; }
+.nav-cta:hover { background:var(--brown); }
+
+/* HERO */
+#hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:0 2.5rem 4rem;
+  position:relative; overflow:hidden;
+}
+
+.hero-year {
+  position:absolute; top:6rem; right:2.5rem;
+  font-family:var(--font-serif); font-style:italic; font-weight:300;
+  font-size:0.8rem; color:var(--muted); letter-spacing:0.08em;
+  writing-mode:vertical-rl; transform:rotate(180deg);
+}
+.hero-title {
+  font-family:var(--font-display);
+  font-size:clamp(6rem,18vw,22rem);
+  line-height:0.85;
+  letter-spacing:-0.01em;
+  position:relative; z-index:1;
+}
+.hero-title .stroke {
+  -webkit-text-stroke:2px var(--ink);
+  color:transparent;
+}
+.hero-title .red { color:var(--moss); }
+.hero-row2 {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-top:2.5rem; position:relative; z-index:1;
+}
+.hero-sub {
+  max-width:320px;
+  font-size:0.88rem; line-height:1.75; color:var(--muted);
+}
+.hero-sub strong { color:var(--ink); font-weight:500; }
+.hero-available {
+  display:flex; align-items:center; gap:0.6rem;
+  font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);
+}
+.avail-dot { width:7px; height:7px; border-radius:50%; background:#2ecc71; animation:blink 2s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+/* DIVIDER */
+.divider { border:none; border-top:1px solid var(--line); margin:0; }
+
+/* WORKS */
+#work { padding:6rem 2.5rem; }
+.work-header {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom:4rem;
+}
+.work-title-block h2 {
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,8vw,8rem);
+  line-height:0.9; letter-spacing:0.01em;
+}
+.work-title-block h2 em {
+  font-family:var(--font-serif); font-style:italic; font-weight:300;
+  color:var(--brown);
+}
+.work-count { font-family:var(--font-serif); font-style:italic; font-size:0.9rem; color:var(--muted); }
+
+/* PROJECT ROWS */
+.project-list { border-top:1px solid var(--line); }
+
+.project-row {
+  display:grid; grid-template-columns:80px 1fr 220px 80px;
+  align-items:center; gap:2rem;
+  padding:2.2rem 0;
+  border-bottom:1px solid var(--line);
+  cursor:none;
+  transition:background 0.2s, padding 0.3s;
+  position:relative; overflow:hidden;
+}
+.project-row::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:0;
+  background:var(--moss); transition:width 0.3s ease;
+}
+.project-row:hover::before { width:4px; }
+.project-row:hover { background:var(--cream); padding-left:1.5rem; }
+
+.pr-num { font-family:var(--font-body); font-size:0.7rem; color:var(--muted); letter-spacing:0.1em; }
+.pr-info h3 { font-family:var(--font-display); font-size:clamp(1.6rem,3vw,3rem); letter-spacing:0.02em; line-height:1; }
+.pr-info p { font-size:0.78rem; color:var(--muted); margin-top:0.4rem; letter-spacing:0.04em; }
+.pr-tags { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.pr-tag {
+  font-size:0.68rem; letter-spacing:0.07em; text-transform:uppercase;
+  border:1px solid var(--line); padding:0.25rem 0.65rem;
+  color:var(--muted); transition:all 0.2s;
+}
+.project-row:hover .pr-tag { border-color:var(--moss); color:var(--moss); }
+.pr-arrow {
+  font-size:1.4rem; color:var(--muted); text-align:right;
+  transition:all 0.3s; text-decoration:none; display:block;
+}
+.project-row:hover .pr-arrow { color:var(--brown); transform:translateX(4px); }
+
+/* SERVICES */
+#services { padding:6rem 2.5rem; background:var(--dark-moss); color:var(--bg); }
+.services-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5rem; gap:4rem; }
+.services-headline {
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,7vw,8rem);
+  line-height:0.9; letter-spacing:0.01em;
+}
+.services-headline em { font-family:var(--font-serif); font-style:italic; font-weight:300; color:var(--sand); }
+.services-desc { max-width:300px; font-size:0.88rem; line-height:1.8; color:rgba(240,235,224,0.55); padding-top:1rem; }
+
+.services-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.08); }
+.svc-card {
+  background:var(--dark-moss); padding:2.5rem 2rem;
+  transition:background 0.3s;
+}
+.svc-card:hover { background:#8b5e3c; }
+.svc-icon { font-size:2rem; margin-bottom:1.5rem; display:block; }
+.svc-name { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.03em; margin-bottom:1rem; }
+.svc-desc { font-size:0.82rem; line-height:1.8; color:rgba(240,235,224,0.5); }
+.svc-list { margin-top:1.5rem; list-style:none; }
+.svc-list li {
+  font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase;
+  color:rgba(240,235,224,0.35); padding:0.6rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex; align-items:center; gap:0.6rem;
+}
+.svc-list li::before { content:'→'; color:var(--sand); font-size:0.7rem; }
+
+/* CTA STRIP */
+.cta-strip {
+  margin-top:4rem; padding:3rem 2rem;
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex; justify-content:space-between; align-items:center; gap:2rem;
+  flex-wrap:wrap;
+}
+.cta-strip-text { font-family:var(--font-display); font-size:clamp(2rem,4vw,4rem); letter-spacing:0.02em; line-height:1; }
+.cta-strip-text em { font-family:var(--font-serif); font-style:italic; font-weight:300; color:var(--sand); }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:0.75rem;
+  background:var(--sand); color:var(--dark-moss);
+  font-family:var(--font-body); font-size:0.85rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+  padding:1rem 2rem; text-decoration:none;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(201,169,122,0.45); }
+.cta-btn::after { content:'↗'; font-size:1.1rem; }
+
+/* CONTACT */
+#contact { padding:7rem 2.5rem; }
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; }
+.contact-left {}
+.contact-big {
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,7vw,8rem);
+  line-height:0.9; letter-spacing:0.02em; margin-bottom:2rem;
+}
+.contact-big em { font-family:var(--font-serif); font-style:italic; font-weight:300; color:var(--brown); }
+.contact-note { font-size:0.88rem; color:var(--muted); line-height:1.8; max-width:340px; margin-bottom:3rem; }
+.socials { display:flex; flex-direction:column; gap:0.25rem; }
+.social-link {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 0; border-bottom:1px solid var(--line);
+  text-decoration:none; color:var(--ink);
+  font-size:0.88rem; letter-spacing:0.04em;
+  transition:padding-left 0.2s;
+}
+.social-link:hover { padding-left:0.5rem; color:var(--moss); }
+.social-link span { font-size:0.8rem; color:var(--muted); }
+
+/* FORM */
+.contact-form { display:flex; flex-direction:column; gap:0; }
+.field-wrap {
+  border-bottom:1px solid var(--line);
+  padding:1.2rem 0;
+  position:relative;
+}
+.field-wrap label {
+  display:block; font-size:0.65rem; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem;
+}
+.field-wrap input, .field-wrap textarea, .field-wrap select {
+  width:100%; background:transparent; border:none; outline:none;
+  font-family:var(--font-body); font-size:1rem; color:var(--ink);
+  resize:none;
+}
+.field-wrap textarea { height:100px; }
+.field-wrap input::placeholder, .field-wrap textarea::placeholder { color:var(--muted); }
+.field-wrap::after {
+  content:''; position:absolute; bottom:-1px; left:0;
+  width:0; height:1px; background:var(--moss);
+  transition:width 0.3s;
+}
+.field-wrap:focus-within::after { width:100%; }
+.field-wrap select { appearance:none; cursor:none; }
+.submit-row { display:flex; justify-content:flex-end; margin-top:2rem; }
+.submit-btn {
+  background:var(--ink); color:var(--bg);
+  border:none; font-family:var(--font-display); font-size:1.4rem; letter-spacing:0.08em;
+  padding:0.9rem 2.5rem; cursor:none;
+  transition:background 0.2s, transform 0.2s;
+  display:flex; align-items:center; gap:0.75rem;
+}
+.submit-btn:hover { background:var(--brown); transform:translateX(4px); }
+.submit-btn span { font-family:var(--font-body); font-size:0.8rem; transform:rotate(0deg); transition:transform 0.2s; }
+.submit-btn:hover span { transform:rotate(-45deg); }
+
+/* FOOTER */
+footer {
+  padding:2rem 2.5rem;
+  border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:0.72rem; color:var(--muted); letter-spacing:0.06em;
+}
+footer a { color:var(--muted); text-decoration:none; }
+footer a:hover { color:var(--moss); }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.up { opacity:1; transform:translateY(0); }
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .project-row{grid-template-columns:50px 1fr 50px}
+  .pr-tags{display:none}
+  .services-cards{grid-template-columns:1fr}
+  .services-top{flex-direction:column;gap:2rem}
+  .contact-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:0.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="cur-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Guilherme<em>Dobrychtop</em></a>
+  <ul class="nav-links">
+    <li><a href="#work">Trabalhos</a></li>
+    <li><a href="#services">Serviços</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Trabalhar juntos</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <span class="hero-year">2019 — 2025</span>
+  <div class="hero-title">
+    <div>DESIGN</div>
+    <div><span class="stroke">QUE</span> <span class="red">FAZ</span></div>
+    <div>SENTIDO<span class="red">.</span></div>
+  </div>
+  <div class="hero-row2">
+    <p class="hero-sub">
+      Crio interfaces, marcas e experiências que <strong>as pessoas sentem antes de entender</strong>. Joinville, atuando globalmente.
+    </p>
+    <div class="hero-available">
+      <span class="avail-dot"></span> Disponível agora
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WORKS -->
+<section id="work">
+  <div class="work-header reveal">
+    <div class="work-title-block">
+      <h2>TRABALHOS<br><em>Selecionados</em></h2>
+    </div>
+    <span class="work-count">( 3 projetos )</span>
+  </div>
+
+  <div class="project-list">
+
+    <div class="project-row reveal" data-preview="🎨" data-bg="#d4c4a8">
+      <span class="pr-num">001</span>
+      <div class="pr-info">
+        <h3>M7 ESCOLA DE ARTES</h3>
+        <p>Identidade visual completa</p>
+      </div>
+      <div class="pr-tags">
+        <span class="pr-tag">Branding</span>
+        <span class="pr-tag"></span>
+      </div>
+      <a href="https://www.instagram.com/escolam7/" target="_blank" class="pr-arrow">→</a>
+    </div>
+
+    <div class="project-row reveal" data-preview="📱" data-bg="#c4d4bc">
+      <span class="pr-num">002</span>
+      <div class="pr-info">
+        <h3>ROOKIES BRASIL</h3>
+        <p>Identidade visual, site e UI/UX</p>
+      </div>
+      <div class="pr-tags">
+        <span class="pr-tag">UI/UX</span>
+        <span class="pr-tag">Design System</span>
+      </div>
+      <a href="https://rookiesbrasil.vercel.app/" target="_blank" class="pr-arrow">→</a>
+    </div>
+
+    <div class="project-row reveal" data-preview="🌿" data-bg="#b8c9a8">
+      <span class="pr-num">003</span>
+      <div class="pr-info">
+        <h3>TABELADO DE 3</h3>
+        <p>Site e UI/UX Design</p>
+      </div>
+      <div class="pr-tags">
+        <span class="pr-tag">Branding</span>
+        <span class="pr-tag">Packaging</span>
+      </div>
+      <a href="https://tabeladode3.blog/" target="_blank" class="pr-arrow">→</a>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-top">
+    <h2 class="services-headline reveal">O QUE<br><em>Ofereço</em></h2>
+    <p class="services-desc reveal">Design é a lógica invisível que faz alguém continuar usando um produto ou escolher uma marca sem saber por quê.</p>
+  </div>
+
+  <div class="services-cards">
+    <div class="svc-card reveal">
+      <span class="svc-icon">◈</span>
+      <h3 class="svc-name">UI/UX DESIGN</h3>
+      <p class="svc-desc">Interfaces que funcionam como experiência - do fluxo à micro+-interação.</p>
+      <ul class="svc-list">
+        <li>Pesquisa & discovery</li>
+        <li>Wireframes e fluxos</li>
+        <li>Design de alta fidelidade</li>
+        <li>Protótipos interativos</li>
+        <li>Landing Pages responsivas</li>
+      </ul>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">◉</span>
+      <h3 class="svc-name">BRANDING</h3>
+      <p class="svc-desc">Identidades que ficam na memória. Da estratégia à aplicação em todos os pontos de contato.</p>
+      <ul class="svc-list">
+        <li>Estratégia de marca</li>
+        <li>Logotipo e símbolo</li>
+        <li>Tipografia e paleta</li>
+        <li>Brand guidelines</li>
+        <li>Aplicações e mockups</li>
+      </ul>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">◎</span>
+      <h3 class="svc-name">DESIGN SYSTEM</h3>
+      <p class="svc-desc">Componentes, tokens e documentação para equipes que constroem produtos em escala.</p>
+      <ul class="svc-list">
+        <li>Biblioteca de componentes</li>
+        <li>Design tokens</li>
+        <li>Documentação Figma</li>
+        <li>Padrões de acessibilidade</li>
+        <li>Consultoria contínua</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta-strip reveal">
+    <div class="cta-strip-text">Tem um projeto?<br><em>Vamos falar.</em></div>
+    <a href="https://wa.me/5547988274960" target="_blank" class="cta-btn">Entrar em contato</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <div class="contact-big">FALA<br><em>Comigo</em></div>
+      <p class="contact-note">Aberta para projetos de branding, UI/UX e design de produto. Me conta o que você está construindo.</p>
+      <div class="socials">
+        <a href="#" class="social-link">Behance <span>→</span></a>
+        <a href="mailto:guilhermeych@gmail.com" class="social-link">guilhermeych@gmail.com <span>→</span></a>
+      </div>
+    </div>
+    <form class="contact-form reveal" onsubmit="return handleSubmit(event)">
+      <div class="field-wrap">
+        <label>Seu nome</label>
+        <input type="text" placeholder="Como te chamam?" required>
+      </div>
+      <div class="field-wrap">
+        <label>Email</label>
+        <input type="email" placeholder="seu@email.com" required>
+      </div>
+      <div class="field-wrap">
+        <label>Tipo de projeto</label>
+        <select>
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option>UI/UX - Site ou App</option>
+          <option>Branding e Identidade Visual</option>
+          <option>Design System</option>
+        </select>
+      </div>
+      <div class="field-wrap">
+        <label>Mensagem</label>
+        <textarea placeholder="Me conta mais sobre o que você precisa e quando..." required></textarea>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submitBtn">
+          ENVIAR <span>↗</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Guilherme Dobrychtop — Designer</span>
+  <span>Joinville, Brasil</span>
+  <a href="#hero">↑ Topo</a>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.transform = `translate(${mx-5}px,${my-5}px)`;
+});
+(function animRing(){
+  rx += (mx-rx)*0.1; ry += (my-ry)*0.1;
+  ring.style.transform = `translate(${rx-18}px,${ry-18}px)`;
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,input,textarea,select,.project-row,.svc-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hover'));
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('up'), i*60);
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Form submit
+function handleSubmit(e){
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = 'ENVIADO ✓';
+  btn.style.background = '#2ecc71';
+  return false;
+}
+</script>
+</body>
+</html>
